@@ -14,7 +14,7 @@ export async function createUser(req, res) {
 export const getUserById = async (req, res) => {
     try {
         const UserDetails = req.params.id;
-        const user = await Patient.findById(UserDetails)
+        const user = await User.findById(UserDetails)
 
         return res.status(200).json(user);
     } catch (error) {
@@ -38,13 +38,13 @@ export const updateUserById = async (req, res) => {
 export const deleteUserById = async (req, res) => {
     try{
         const UserId = req.params.id;
-        const deletedUser = await Patient.findByIdAndDelete(UserId);
+        const deletedUser = await User.findByIdAndDelete(UserId);
 
         if (!deletedUser) {
             return res.status(404).json({ message: "User not found"});
         }
 
-        res.status(200).json({ message: "Patient deleted successfully"});
+        res.status(200).json({ message: "User deleted successfully"});
     } catch (error) {
         res.status(500).json({ message: error. message});
     }

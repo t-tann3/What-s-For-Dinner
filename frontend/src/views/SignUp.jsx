@@ -5,7 +5,8 @@ import axios from "axios";
 const SignUp = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [password, SetPassword] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const navigate = useNavigate();
 
 
@@ -13,18 +14,12 @@ const SignUp = () => {
         const newUser = {
         username,
         email,
-        password 
+        password,
+        confirmPassword
     };
-
-    axios.post('http://localhost:8000/api/users/register', newUser)
-        .then((response) => {
-            if(response === 200){
-                console.log('User Added successfully')
-                setUsername('')
-                setEmail('')
-                SetPassword('')
-                navigate('/allmeals')
-            }
+    axios.post('http://localhost:8000/api/users/register', newUser, {withCredentials: true})
+        .then(() => {
+            navigate('/allMeals')
         })
         .catch((error) => {
             console.error('Error adding user:', error)
@@ -49,6 +44,7 @@ const SignUp = () => {
                         type="text"
                         className="form-control"
                         id="username"
+                        placeholder="Enter Username"
                         onChange={(e) => setUsername(e.target.value)}
                         value={username}
                         required
@@ -61,6 +57,7 @@ const SignUp = () => {
                         type="email"
                         className="form-control"
                         id="email"
+                        placeholder="Enter Email"
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
                         required
@@ -73,8 +70,22 @@ const SignUp = () => {
                         type="password"
                         className="form-control"
                         id="password"
-                        onChange={(e) => SetPassword(e.target.value)}
+                        placeholder="Enter Password"
+                        onChange={(e) => setPassword(e.target.value)}
                         value={password}
+                        required
+                    />
+                </div>
+
+                <div className="form-group mb-3">
+                    <label htmlFor="confirm password">Confirm Password</label>
+                    <input
+                        type="password"
+                        className="form-control"
+                        id="confirm password"
+                        placeholder="Confirm Password"
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        value={confirmPassword}
                         required
                     />
                 </div>

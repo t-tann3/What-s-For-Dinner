@@ -6,8 +6,12 @@ export const authController = {
   // Registration Logic
   register: async (req, res) => {
     try {
-      const { username, email, password } = req.body;
+      const { username, email, password, confirmPassword} = req.body;
 
+      if (password !== confirmPassword) {
+        return res.status(400).json({ message: 'Passwords do not match' });
+      }
+      
       // Check if email already exists
       const existingUser = await User.findOne({ email });
       if (existingUser) {
@@ -22,7 +26,6 @@ export const authController = {
         username,
         email,
         password: hashedPassword,
-        age
       });
 
       // Generate a JWT token for the new user
@@ -33,13 +36,24 @@ export const authController = {
       );
 
       // Send the token as a cookie
-      res
-        .cookie('usertoken', userToken, { httpOnly: true })
-        .json({ message: 'User registered successfully!' });
+      return res.status(201).json({
+        message: 'User registered successfully',
+        token: userToken,
+        user: {
+          id: newUser._id,
+          username: newUser.username,
+          email: newUser.email,
+        }
+      });
+      
     } catch (error) {
+      console.error('Error during registration:', error);
       res.status(500).json({ message: 'Server error during registration', error });
     }
   },
+
+
+
 
   // Login Logic
   login: async (req, res) => {

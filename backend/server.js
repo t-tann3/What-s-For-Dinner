@@ -10,10 +10,8 @@ import dbConnect from './config/mongoose.config.js';
 dotenv.config();
 
 const app = express();
-
-app.use(express.json(), cors());
+app.use(express.json(), cors({ origin: 'http://localhost:5173', credentials:true}));
 app.use(cookieParser());
-app.use(cors({ origin: 'http://localhost:5173'}));
 app.use('/api', router);
 app.use('/api', UserRouter);
 app.use('/api', MealRouter);
