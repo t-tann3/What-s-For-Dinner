@@ -13,14 +13,17 @@ const Login = () => {
             password
         };
 
-        axios.post('http://localdomain:8000/api/login', loginInfo)
+        axios.post('http://localhost:8000/api/users/login', loginInfo)
             .then((response) => {
-                if(response === 200){
+                console.log(response)
                     console.log('User logged in successfully')
                     setUsername('')
                     SetPassword('')
-                    navigate('/')
-                }
+                    navigate('/allmeals')
+                
+            })
+            .catch((error) => {
+                console.log(error)
             })
     }
 

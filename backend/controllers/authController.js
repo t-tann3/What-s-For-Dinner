@@ -19,15 +19,17 @@ export const authController = {
       }
 
       // Hash the password before saving to the database
-      const hashedPassword = await bcrypt.hash(password, 10);
+      // const hashedPassword = await bcrypt.hash(password, 10);
 
       // Create a new user with the hashed password
       const newUser = await User.create({
         username,
         email,
-        password: hashedPassword,
+        password,
+        confirmPassword
       });
 
+      
       // Generate a JWT token for the new user
       const userToken = jwt.sign(
         { id: newUser._id },
@@ -58,10 +60,10 @@ export const authController = {
   // Login Logic
   login: async (req, res) => {
     try {
-      const { email, password } = req.body;
-
-      // Find the user by email
-      const user = await User.findOne({ email });
+      const { username, password } = req.body;
+      console.log(username, password)
+      // Find the user by username
+      const user = await User.findOne({ username });
       if (!user) {
         return res.status(400).json({ message: 'Invalid email or password.' });
       }

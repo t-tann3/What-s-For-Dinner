@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const userSchema = new Schema(
     {
@@ -36,7 +37,9 @@ userSchema.virtual('confirmPassword')
 
 // Pre-validate hook to compare password and confirmPassword
 userSchema.pre('validate', function(next) {
-    if (this.password !== this.confirmPassword) {
+  console.log(this.password)
+  console.log(this._confirmPassword)
+    if (this.password !== this._confirmPassword) {
       this.invalidate('confirmPassword', 'Password must match confirm password');
     }
     next();
