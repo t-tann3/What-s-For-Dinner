@@ -31,9 +31,9 @@ const AllMeals = () => {
       <div className="row">
         {meals.map((meal) => (
           <div className="col-md-6" key={meal._id}>
-            <div className="card">
+            <div className="card mb-3">
               <div className="card-body text-center">
-                <h2 className="card-title"><Link to={`/updateMeal/${meal._id}`}>{meal.meal_name}</Link></h2>
+                <h2 className="card-title color"><Link to={`/updateMeal/${meal._id}`}>{meal.meal_name}</Link></h2>
               </div>
             </div>
           </div>
