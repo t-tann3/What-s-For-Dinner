@@ -16,9 +16,8 @@ const UpdateMeal = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('Meal ID:', id);
         const getMeal = () => {
-            axios.get(`http://localhost:8000/api/meals/updateMeal/${id}`)
+            axios.get(`http://localhost:8000/api/updateMeal/${id}`)
                 .then((response) => {
                     console.log('Meal details fetched:', response.data);
                     setName(response.data.meal_name);
@@ -40,7 +39,7 @@ const UpdateMeal = () => {
     const handleDelete = () => {
         axios.delete(`http://localhost:8000/api/meals/${id}`)
             .then(() => {
-                navigate('/');
+                navigate('/allmeals');
             })
             .catch((error) => {
                 console.error('Error deleting meal:', error.response ? error.response.data : error.message);
@@ -65,7 +64,7 @@ const UpdateMeal = () => {
         axios.put(`http://localhost:8000/api/meals/${id}`, updatedMeal)
             .then(() => {
                 console.log('Meal updated successfully');
-                navigate(`/meals/${id}`);
+                navigate('/allmeals');
             })
             .catch((error) => {
                 console.error('Error fetching patient details:', error.response ? error.response.data : error.message);

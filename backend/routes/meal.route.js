@@ -5,7 +5,7 @@ const MealRouter = Router();
 
 MealRouter.post('/meals/createMeal', createMeal);
 
-MealRouter.get('/meals/updateMeal/:id', getMealById);
+MealRouter.get('/updateMeal/:id', getMealById);
 
 MealRouter.get('/meals', getAllMeals);
 
